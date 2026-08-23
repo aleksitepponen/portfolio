@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aleksi Tepponen — Automated Mobility Portfolio</title>
+<meta name="description" content="Testing, validation, and real-world deployment of automated vehicles — 25+ deployments across 7 countries.">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F5F3EE;
+    --surface: #FFFFFF;
+    --text: #14202E;
+    --text-muted: #5B6572;
+    --border: #DCD7CC;
+    --route: #2A5FD9;
+    --stop: #F2A65A;
+    --hero-bg: #14202E;
+    --hero-text: #F5F3EE;
+    --hero-muted: #8D98A6;
+    --font-display: 'Oswald', 'Arial Narrow', sans-serif;
+    --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0F1620;
+      --surface: #161F2B;
+      --text: #E7EAEE;
+      --text-muted: #98A2AF;
+      --border: #2A3442;
+      --route: #6FA3E8;
+      --stop: #F2A65A;
+      --hero-bg: #0A1119;
+      --hero-text: #E7EAEE;
+      --hero-muted: #7C8794;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  a { color: var(--route); text-decoration-thickness: 1px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--route); outline-offset: 3px; }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* ---- hero band ---- */
+
+  .hero-band {
+    background: var(--hero-bg);
+  }
+
+  header.intro {
+    padding: 3.4rem 0 3rem;
+  }
+
+  header.intro .eyebrow { color: #7FA3E8; margin-bottom: 1rem; }
+
+  .intro-top {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .headshot {
+    width: auto;
+    height: auto;
+    max-height: 260px;
+    aspect-ratio: 344 / 430;
+    object-fit: cover;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 560px) {
+    .intro-top { flex-direction: column-reverse; gap: 1.2rem; }
+    .headshot { width: 92px; height: 130px; }
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(2.6rem, 7vw, 4.2rem);
+    line-height: 0.92;
+    letter-spacing: 0.005em;
+    margin: 0 0 0.7rem;
+    color: var(--hero-text);
+    text-wrap: balance;
+  }
+
+  .role-line {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--stop);
+    margin: 0 0 1.1rem;
+    text-wrap: balance;
+  }
+
+  .lede {
+    max-width: 58ch;
+    font-size: 1.05rem;
+    margin: 0 0 1.4rem;
+  }
+
+  header.intro .lede { color: #C4CCD6; }
+
+  .contact-line {
+    font-family: var(--font-mono);
+    font-size: 0.83rem;
+    color: var(--hero-muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em 1em;
+  }
+
+  .contact-line a { color: var(--hero-muted); }
+  .contact-line a:hover { color: var(--stop); }
+
+  footer .contact-line, footer .contact-line a { color: var(--text-muted); }
+  footer .contact-line a:hover { color: var(--route); }
+
+  /* ---- dashboard stats strip ---- */
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin: 2.4rem 0 2.6rem;
+  }
+
+  .stat {
+    padding: 1.4rem 1.2rem;
+    border-right: 1px solid var(--border);
+  }
+
+  .stat:last-child { border-right: none; }
+
+  .stat .num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 1.9rem;
+    font-weight: 500;
+    color: var(--route);
+    display: block;
+  }
+
+  .stat .label {
+    font-size: 0.78rem;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+  }
+
+  @media (max-width: 560px) {
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stat:nth-child(2) { border-right: none; }
+    .stat:nth-child(3), .stat:nth-child(4) { border-top: 1px solid var(--border); }
+  }
+
+  /* ---- section header ---- */
+
+  section.work { margin-top: 2.8rem; }
+
+  section.work > h2 {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    margin: 0 0 2.2rem;
+  }
+
+  section.work > h2::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-image: repeating-linear-gradient(to right, var(--border) 0 8px, transparent 8px 15px);
+  }
+
+  /* ---- route timeline ---- */
+
+  .stop {
+    display: flex;
+    gap: 1.4rem;
+  }
+
+  .stop .rail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 14px;
+    flex-shrink: 0;
+  }
+
+  .stop .rail .dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--stop);
+    box-shadow: 0 0 0 3px var(--route);
+    flex-shrink: 0;
+    margin-top: 0.3rem;
+  }
+
+  .stop .rail .line {
+    flex: 1;
+    width: 2px;
+    margin-top: 0.4rem;
+    background-image: repeating-linear-gradient(to bottom, var(--route) 0 6px, transparent 6px 13px);
+  }
+
+  .stop:last-child .rail .line { display: none; }
+
+  .stop-body {
+    flex: 1;
+    min-width: 0;
+    padding-bottom: 2.6rem;
+  }
+
+  .stop .meta {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1em;
+    margin-bottom: 0.5rem;
+  }
+
+  .stop .meta .place { color: var(--text); font-weight: 500; }
+
+  .stop-body h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.4rem, 3vw, 1.7rem);
+    line-height: 1.08;
+    margin: 0 0 0.7rem;
+    text-wrap: balance;
+  }
+
+  .stop-body p.result {
+    font-weight: 600;
+    color: var(--stop);
+    font-size: 0.95rem;
+    margin: 0 0 0.9rem;
+  }
+
+  .project-photos {
+    display: flex;
+    gap: 0.6rem;
+    margin: 0 0 0.9rem;
+  }
+
+  .project-photos img {
+    width: 50%;
+    height: 148px;
+    object-fit: cover;
+    display: block;
+    cursor: zoom-in;
+  }
+
+  .project-photos.single img {
+    width: 100%;
+    height: 220px;
+  }
+
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 14, 20, 0.88);
+    z-index: 100;
+    padding: 5vh 5vw;
+    cursor: zoom-out;
+  }
+
+  .lightbox.open {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  .lightbox-close {
+    position: fixed;
+    top: 1.2rem;
+    right: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: #E7EAEE;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 3px;
+    padding: 0.4rem 0.7rem;
+    cursor: pointer;
+  }
+
+  .photo-credit {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin: -0.6rem 0 0.9rem;
+  }
+
+  .stop-body p.narrative {
+    margin: 0 0 0.9rem;
+    max-width: 62ch;
+  }
+
+  .tags {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .tags span:not(:last-child)::after { content: " · "; }
+
+  .links {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin: 0.6rem 0 0;
+  }
+
+  .links a { color: var(--route); }
+  .links .sep { color: var(--text-muted); }
+
+  @media (max-width: 560px) {
+    .stop { gap: 1rem; }
+    .stop .meta { flex-direction: column; gap: 0.15rem; }
+  }
+
+  /* ---- footer ---- */
+
+  footer.recognition {
+    margin-top: 1rem;
+    padding-top: 2.4rem;
+    padding-bottom: 4rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  footer.recognition .eyebrow { margin-bottom: 0.7rem; }
+
+  footer.recognition ul {
+    list-style: none;
+    margin: 0 0 1.8rem;
+    padding: 0;
+  }
+
+  footer.recognition li {
+    position: relative;
+    padding: 0.4rem 0 0.4rem 1.1rem;
+    border-bottom: 1px dotted var(--border);
+  }
+
+  footer.recognition li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.95rem;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--route);
+  }
+
+  footer.recognition li:last-child { border-bottom: none; }
+
+  footer.recognition .contact-line { margin-top: 0.4rem; }
+
+  .testimonial {
+    margin: 0 0 2.4rem;
+    padding: 0 0 0 1.1rem;
+    border-left: 2px solid var(--stop);
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.55;
+  }
+
+  .testimonial .attribution {
+    display: inline-block;
+    margin-top: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-style: normal;
+    color: var(--text-muted);
+  }
+</style>
+</head>
+<body>
+
+<div class="hero-band">
+  <header class="intro page">
+    <div class="intro-top">
+      <div>
+        <p class="eyebrow">Lead Test Engineer, Motor AI</p>
+        <h1>Aleksi&nbsp;Tepponen</h1>
+        <p class="role-line">Automated Mobility Expert &mdash; Verification &amp; Validation + Operations</p>
+        <p class="lede">Eight years developing, testing, and running automated vehicles in the real world &mdash; from a Norwegian winter pilot to running a test program in Japan. Currently leading the testing team at Motor&nbsp;AI, a German company developing a European Automated Driving System.</p>
+        <p class="contact-line">
+          <span>Berlin, Germany</span>
+          <a href="mailto:aleksi.tepponen@hotmail.com">aleksi.tepponen@hotmail.com</a>
+          <a href="tel:+358443531767">+358 44 353 1767</a>
+          <a href="https://www.linkedin.com/in/aleksi-tepponen/">linkedin.com/in/aleksi-tepponen</a>
+        </p>
+      </div>
+      <img src="images/headshot.jpg" alt="Aleksi Tepponen" class="headshot">
+    </div>
+  </header>
+</div>
+
+<div class="page">
+
+  <div class="stats">
+    <div class="stat"><span class="num">08</span><span class="label">years in automated mobility</span></div>
+    <div class="stat"><span class="num">25+</span><span class="label">deployments &amp; testing programs</span></div>
+    <div class="stat"><span class="num">07</span><span class="label">countries</span></div>
+    <div class="stat"><span class="num">&euro;3M+</span><span class="label">EU Horizon project funding</span></div>
+  </div>
+
+  <p class="lede">Since 2018, combining V&amp;V expertise, EU-funded project management, and team leadership into one holistic approach: getting automated vehicles out of the lab and running safely in public, through winters, permits, and showing up on site.</p>
+
+  <section class="work">
+    <h2>Selected work</h2>
+
+    <article class="stop">
+      <div class="rail"><span class="dot"></span><span class="line"></span></div>
+      <div class="stop-body">
+        <div class="meta">
+          <div class="place">Espoo, Finland</div>
+          <div>2020 &ndash; 2023</div>
+          <div>Sensible 4</div>
+        </div>
+        <h3>System Test Lead &mdash; building V&amp;V from the ground up</h3>
+        <p class="result">Testing framework, team, and programs built from scratch</p>
+        <div class="project-photos single">
+          <img src="images/system-test-lead.jpg" alt="Test engineers in high-visibility vests setting up a cone course for obstacle-detection testing" loading="lazy">
+        </div>
+        <p class="photo-credit">Photo: Sensible 4</p>
+        <p class="narrative">Took overall responsibility for Sensible&nbsp;4&rsquo;s system testing: built the V&amp;V strategy, test cases, and issue tracking (Jira&nbsp;+&nbsp;Practitest) from scratch, and led a team of 5 test engineers. Across the programs under this role, testing covered 10+ vehicles in total. Ran or was a key contributor to several open-road validation programs &mdash; in Espoo, third-party safety testing with VTT at Nummela ahead of the Norway pilots, Arctic winter testing in Muonio, and the EU Horizon 2020 <a href="https://cordis.europa.eu/project/id/875530">SHOW programme</a> (91 partners, 20 European cities) in Tampere &mdash; plus confidential programs for a Tier&nbsp;1 supplier and an OEM in Germany.</p>
+        <p class="tags"><span>V&amp;V strategy</span><span>team &amp; fleet management</span><span>safety testing</span><span>issue tracking</span></p>
+        <p class="links"><a href="https://iot-automotive.news/sensible-4-autonomous-driving-software-tested-by-vtt-more-standardization-is-needed/">VTT testing coverage</a></p>
+      </div>
+    </article>
+
+    <article class="stop">
+      <div class="rail"><span class="dot"></span><span class="line"></span></div>
+      <div class="stop-body">
+        <div class="meta">
+          <div class="place">Gjesdal, Norway</div>
+          <div>January 2021 &middot; 4 months on site</div>
+          <div>Sensible 4</div>
+        </div>
+        <h3>FABULOS &mdash; winter validation</h3>
+        <p class="result">Sensible 4&rsquo;s first deployment abroad</p>
+        <div class="project-photos">
+          <img src="images/gjesdal-aleksi.jpg" alt="Aleksi Tepponen working on site inside the autonomous vehicle in Gjesdal, Norway" loading="lazy">
+          <img src="images/gjesdal-driving.jpg" alt="Autonomous shuttle driving through snow on a hilly road in Gjesdal, Norway" loading="lazy">
+        </div>
+        <p class="photo-credit">Photos: Sensible 4</p>
+        <p class="narrative">Led the operation end-to-end on site: a five-person team of external operators running two vehicles through steep hills and a Norwegian winter, twelve-hour shifts, six days a week. Proved all-weather autonomy in conditions most AV pilots avoid entirely &mdash; covered by <a href="https://www.forbes.com/sites/jenniferhicks/2021/01/29/forget-the-city-see-how-this-self-driving-pilot-in-norway-tackles-winter-conditions-and-steep-hills/">Forbes</a>.</p>
+        <p class="tags"><span>All-weather testing</span><span>cross-border deployment</span><span>on-site team leadership</span></p>
+      </div>
+    </article>
+
+    <article class="stop">
+      <div class="rail"><span class="dot"></span><span class="line"></span></div>
+      <div class="stop-body">
+        <div class="meta">
+          <div class="place">Bod&oslash;, Norway</div>
+          <div>Feb &ndash; Aug 2022</div>
+          <div>Sensible 4</div>
+        </div>
+        <h3>World&rsquo;s first long-term AV service north of the Arctic Circle</h3>
+        <p class="result">3.6&nbsp;km route through Arctic winter, ~6.5h daylight</p>
+        <div class="project-photos single">
+          <img src="images/bodo-snow.jpg" alt="Automated shuttle running the Bodø route in heavy snow at dusk" loading="lazy">
+        </div>
+        <p class="photo-credit">Photo: Sensible 4</p>
+        <p class="narrative">Led field deployment activities and trained local safety drivers for two automated Toyota Proace vehicles running a 3.6&nbsp;km city-centre route through Bod&oslash;&rsquo;s harshest conditions &mdash; around 11 days of snow a month and just 6.5 hours of daylight in February. Ensured operational continuity across the full half-year deployment.</p>
+        <p class="tags"><span>Arctic deployment</span><span>safety driver training</span><span>field operations</span></p>
+        <p class="links"><a href="https://www.forbes.com/sites/richblake1/2021/11/08/its-go-time-for-self-driving-cars--north-of-the-arctic-circle/">Forbes</a><span class="sep"> &middot; </span><a href="https://www.youtube.com/watch?v=6VRb3Rwkx0c">Video: Sensible 4</a></p>
+      </div>
+    </article>
+
+    <article class="stop">
+      <div class="rail"><span class="dot"></span><span class="line"></span></div>
+      <div class="stop-body">
+        <div class="meta">
+          <div class="place">Schaffhausen, Switzerland</div>
+          <div>Since April 2023</div>
+          <div>Sensible 4 &times; Swiss Transit Lab</div>
+        </div>
+        <h3>Swiss Transit Lab &mdash; Line 13</h3>
+        <p class="result">Year-round automated transit, no seasonal interruption</p>
+        <div class="project-photos single">
+          <img src="images/schaffhausen.jpg" alt="Line 13 automated shuttle driving through the Stahlgiesserei district, Schaffhausen" loading="lazy">
+        </div>
+        <p class="photo-credit">Photo: Swiss Transit Lab / Sensible 4</p>
+        <p class="narrative">Led field deployment activities and trained local safety drivers for Switzerland&rsquo;s first dual-mode automated vehicle in regular service &mdash; a free public route connecting Schaffhausen station to the Stahlgiesserei district, nicknamed &ldquo;Ryder.&rdquo; Ensured operational continuity through every season since launch.</p>
+        <p class="tags"><span>Field deployment leadership</span><span>safety driver training</span><span>operational continuity</span></p>
+        <p class="links"><a href="https://www.swisstransitlab.ch/de/projekte/linie-13/">Swiss Transit Lab</a><span class="sep"> &middot; </span><a href="https://www.schaffhausen-area.ch/swiss-transit-lab-ein-jahr-automatisiertes-fahren-mit-der-linie-13-in-schaffhausen">1-year anniversary coverage</a></p>
+      </div>
+    </article>
+
+    <article class="stop">
+      <div class="rail"><span class="dot"></span><span class="line"></span></div>
+      <div class="stop-body">
+        <div class="meta">
+          <div class="place">Helsinki, Finland</div>
+          <div>2018&ndash;2020 &middot; launched March 2019</div>
+          <div>Sensible 4 &times; MUJI</div>
+        </div>
+        <h3>GACHA &mdash; the all-weather autonomous shuttle</h3>
+        <p class="result">World&rsquo;s first electric, all-weather autonomous bus</p>
+        <div class="project-photos">
+          <img src="images/gacha-exterior.jpg" alt="GACHA autonomous shuttle driving past the Oodi library at its Helsinki premiere, watched by a crowd" loading="lazy">
+          <img src="images/gacha-interior.jpg" alt="GACHA shuttle interior, showing the rounded-square seating Aleksi designed" loading="lazy">
+        </div>
+        <p class="photo-credit">Photos: Justus Hirvi / Bonzu &amp; MUJI</p>
+        <p class="narrative">Design and test engineer on Sensible 4 and MUJI&rsquo;s flagship shuttle &mdash; interior design, prototype build, and system testing. Designed a small-series version of the vehicle toward UN&nbsp;ECE homologation technical requirements (design only, not produced). Operated in 10+ open-road test and pilot programs across Finland and Japan. Winner, Dubai World Challenge for Self-Driving Transport (2019); Finnish Engineering Award (2020). Now part of the permanent collection at Helsinki&rsquo;s Museum of Technology.</p>
+        <p class="tags"><span>Vehicle design</span><span>prototype manufacturing</span><span>system testing</span><span>UN ECE homologation</span></p>
+        <p class="links"><a href="https://designmuseum.org/exhibitions/beazley-designs-of-the-year/transport-2019/gacha-self-driving-shuttle-bus">Beazley Designs of the Year</a><span class="sep"> &middot; </span><a href="https://www.designboom.com/technology/muji-self-driving-bus-gacha-sensible-4-03-13-2019/">Designboom</a></p>
+      </div>
+    </article>
+
+    <article class="stop">
+      <div class="rail"><span class="dot"></span><span class="line"></span></div>
+      <div class="stop-body">
+        <div class="meta">
+          <div class="place">Mito &amp; Kobe, Japan</div>
+          <div>Announced Nov 2021</div>
+          <div>Sensible 4 &times; UD Trucks &times; Kobe Steel</div>
+        </div>
+        <h3>Level&nbsp;4 dumper truck testing program</h3>
+        <p class="result">31-tonne autonomous vehicle, on-site V&amp;V</p>
+        <div class="project-photos single">
+          <img src="images/dumper-truck.jpg" alt="Fujin, the Level 4 autonomous dumper truck built by UD Trucks with Sensible 4, Kobelco, and ShinMaywa" loading="lazy">
+        </div>
+        <p class="photo-credit">Photo: UD Trucks / Kobelco / Sensible 4</p>
+        <p class="narrative">Led system testing from the Sensible&nbsp;4 side for a Level&nbsp;4 autonomous dumper truck: built the system functional test plan with the UD Trucks team and executed it on site at the JARI proving ground &mdash; validating the technology beyond passenger shuttles, on heavy industrial vehicles.</p>
+        <p class="tags"><span>Industrial V&amp;V</span><span>cross-company test planning</span><span>Level&nbsp;4 validation</span></p>
+        <p class="links"><a href="https://www.udtrucks.com/news-and-stories/news/ud-trucks-and-kobe-steel-conduct-level-4-autonomous-driving-trial-0">UD Trucks</a><span class="sep"> &middot; </span><a href="https://www.kobelco.co.jp/english/releases/1211421_15581.html">Kobe Steel</a></p>
+      </div>
+    </article>
+
+    <article class="stop">
+      <div class="rail"><span class="dot"></span><span class="line"></span></div>
+      <div class="stop-body">
+        <div class="meta">
+          <div class="place">Lemp&auml;&auml;l&auml;, Finland</div>
+          <div>Launched April 2024</div>
+          <div>Remoted &times; Karsan</div>
+        </div>
+        <h3>Karsan e-ATAK</h3>
+        <p class="result">Finland&rsquo;s first ticketed Level&nbsp;4 bus service</p>
+        <p class="narrative">Acted as technology lead for Finland&rsquo;s first autonomous vehicle in regular public service &mdash; a Level&nbsp;4 electric bus running 5.5&nbsp;km with 17 stops, carrying ticketed passengers through open traffic and Finnish winters &mdash; coordinating driving permits and technical topics across all stakeholders.</p>
+        <p class="tags"><span>Technology lead</span><span>permitting &amp; stakeholder coordination</span><span>public service operation</span></p>
+        <p class="links"><a href="https://bus-news.com/karsan-launches-finlands-first-autonomous-electric-bus/">Bus-News (feat. Remoted)</a><span class="sep"> &middot; </span><a href="https://www.sustainable-bus.com/news/after-norway-finland-autonomous-karsan-e-atak-lands-in-tampere/">Sustainable Bus</a></p>
+      </div>
+    </article>
+
+    <article class="stop">
+      <div class="rail"><span class="dot"></span><span class="line"></span></div>
+      <div class="stop-body">
+        <div class="meta">
+          <div class="place">Tampere, Finland</div>
+          <div>Jan 2024 &ndash; Oct 2025 (role)</div>
+          <div>Remoted &middot; EU Horizon Europe</div>
+        </div>
+        <h3>metaCCAZE</h3>
+        <p class="result">Driverless public transport, remotely monitored</p>
+        <p class="narrative">Managed Remoted&rsquo;s &euro;2.9M role in this 43-partner, 12-country EU Horizon project, bringing automated buses into Tampere&rsquo;s regular public transport network, and secured funding for several additional EU Horizon programs during the same period. No longer with Remoted as of October 2025 &mdash; the project has since progressed to fully driverless operation, monitored from a remote centre, in June 2026.</p>
+        <p class="tags"><span>EU project management</span><span>remote fleet operations</span><span>multi-stakeholder coordination</span></p>
+        <p class="links"><a href="https://www.tampere.fi/en/current/2026/06/15/driverless-robot-bus-new-era-begins-tampere">City of Tampere</a><span class="sep"> &middot; </span><a href="https://cordis.europa.eu/search?q=METACCAZE">CORDIS</a></p>
+      </div>
+    </article>
+
+    <article class="stop">
+      <div class="rail"><span class="dot"></span></div>
+      <div class="stop-body" style="padding-bottom: 0;">
+        <div class="meta">
+          <div class="place">Metropolia UAS</div>
+          <div>Master&rsquo;s thesis &middot; 2024</div>
+          <div>Commissioned by Remoted</div>
+        </div>
+        <h3>Development of a Remote Control Center</h3>
+        <p class="result">Grade 5 (excellent) &middot; adopted into metaCCAZE</p>
+        <p class="narrative">Defined the concept for remotely operating driverless vehicle fleets &mdash; four levels of remote control, safety and legislative analysis across Europe, and direct participation in Finland&rsquo;s road-traffic automation policy consultation. Became the operational foundation later used in the metaCCAZE deployment above.</p>
+        <p class="tags"><span>Remote operations concept</span><span>functional &amp; operational safety</span><span>regulatory analysis</span></p>
+        <p class="links"><a href="https://www.theseus.fi/handle/10024/853997">Thesis, Theseus</a></p>
+      </div>
+    </article>
+
+  </section>
+
+  <footer class="recognition">
+    <p class="eyebrow">From a colleague</p>
+    <blockquote class="testimonial">&ldquo;I would make a claim that Aleksi has been at the forefront of most AV deployments in Finland and Norway, making him a go-to expert in the field.&rdquo;<br><span class="attribution">Markku Jokinen, Product Manager, Sensible 4 (colleague, 2018&ndash;2023)</span></blockquote>
+
+    <p class="eyebrow">Recognition</p>
+    <ul>
+      <li><a href="https://www.tek.fi/en/news-blogs/finnish-engineering-award-creators-self-driving-bus">Finnish Engineering Award 2020</a> &mdash; TEK &amp; TFiF, awarded to the Sensible 4 GACHA team</li>
+      <li><a href="https://electriccarsreport.com/2019/10/dubai-world-challenge-for-self-driving-transport-winners-announced-for-prizes-worth-usd-5-1-million/">Dubai World Challenge for Self-Driving Transport</a> &mdash; startup category winner, 2019</li>
+      <li><a href="https://www.g-mark.org/award/describe/49044">GOOD DESIGN Award (gold)</a> 2019 &mdash; Japan Institute of Design Promotion, for GACHA</li>
+      <li>GACHA is now part of the permanent collection at the <a href="https://www.tekniikanmuseo.fi/en/">Museum of Technology (Tekniikan museo)</a>, Helsinki</li>
+      <li>Pitching competition winner &mdash; TUM Munich, 2025 (investor pitch)</li>
+      <li>Guest lecturer &mdash; Tampere University, <a href="https://sites.tuni.fi/enact/courses/designing-automated-transport-systems/">Designing Automated Transport Systems</a>, <em>Real world applications of automated vehicles</em></li>
+    </ul>
+    <p class="contact-line">
+      <span>Berlin, Germany</span>
+      <a href="mailto:aleksi.tepponen@hotmail.com">aleksi.tepponen@hotmail.com</a>
+      <a href="tel:+358443531767">+358 44 353 1767</a>
+      <a href="https://www.linkedin.com/in/aleksi-tepponen/">linkedin.com/in/aleksi-tepponen</a>
+    </p>
+  </footer>
+
+</div>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" type="button">Close &times;</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<script>
+(function () {
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  var closeBtn = document.getElementById('lightboxClose');
+
+  function openLightbox(src, alt) {
+    lightboxImg.src = src;
+    lightboxImg.alt = alt || '';
+    lightbox.classList.add('open');
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    lightboxImg.src = '';
+  }
+
+  document.querySelectorAll('.project-photos img').forEach(function (img) {
+    img.addEventListener('click', function () {
+      openLightbox(img.src, img.alt);
+    });
+  });
+
+  closeBtn.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function (e) {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
+})();
+</script>
+</body>
+</html>
